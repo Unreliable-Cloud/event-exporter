@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-exporter
+  namespace: monitoring
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: event-exporter
+        version: v1
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '2112'
+        prometheus.io/path: '/metrics'
+    spec:
+      serviceAccountName: event-exporter
+      containers:
+        - name: event-exporter
+          # The good practice would be to pin the version. This is just a reference so that we don't
+          # have to update this file in each release.
+          image: ghcr.io/resmoio/kubernetes-event-exporter:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - -conf=/data/config.yaml
+          ports:
+          - containerPort: 2112
+            name: metrics
+            protocol: TCP
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: '/metrics'
+              port: metrics
+              scheme: HTTP
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: '/metrics'
+              port: metrics
+              scheme: HTTP
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          volumeMounts:
+            - mountPath: /data
+              name: cfg
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi 
+            requests:
+              cpu: 100m
+              memory: 100Mi
+      volumes:
+        - name: cfg
+          configMap:
+            name: event-exporter-cfg
+  selector:
+    matchLabels:
+      app: event-exporter
+      version: v1
