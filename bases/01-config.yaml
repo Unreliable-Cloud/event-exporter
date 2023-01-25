@@ -13,7 +13,7 @@ data:
       routes:
         - match:
             - receiver: "dump"
-              kind: "Deployment|Pod|StatefulSet|ReplicaSet|DaemonSet|Secret|ConfigMap"
+              kind: "Deployment|StatefulSet|ReplicaSet|DaemonSet|Secret|ConfigMap"
     receivers:
       - name: "dump"
         stdout: {}
