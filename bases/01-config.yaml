@@ -11,9 +11,10 @@ data:
     logFormat: json
     route:
       routes:
-        - match:
-            - receiver: "dump"
-              kind: "Deployment|StatefulSet|ReplicaSet|DaemonSet|Secret|ConfigMap"
+      - drop:
+        - namespace: "kyverno"
+        match:
+        - receiver: "dump"
     receivers:
       - name: "dump"
         stdout: {}
