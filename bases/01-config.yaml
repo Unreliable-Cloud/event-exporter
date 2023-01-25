@@ -11,10 +11,10 @@ data:
     logFormat: json
     route:
       routes:
+      - drop:
+        - reason: "DNSConfigForming"
       - match:
         - kind: "Pod|Deployment|DaemonSet|StatefulSet"
-          drop:
-          - reason: "DNSConfigForming"
           receiver: "dump"
     receivers:
       - name: "dump"
