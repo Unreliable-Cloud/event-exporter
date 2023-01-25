@@ -15,9 +15,6 @@ data:
         - reason: "DNSConfigForming"
         match:
         - receiver: "dump"
-      - match:
-        - kind: "Pod|Deployment|DaemonSet|StatefulSet|ReplicaSet"
-          receiver: "dump"
     receivers:
       - name: "dump"
         stdout: {}
