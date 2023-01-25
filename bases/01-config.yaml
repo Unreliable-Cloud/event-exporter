@@ -14,7 +14,7 @@ data:
       - drop:
         - reason: "DNSConfigForming"
       - match:
-        - kind: "Pod|Deployment|DaemonSet|StatefulSet"
+        - kind: "Pod|Deployment|DaemonSet|StatefulSet|ReplicaSet"
           receiver: "dump"
     receivers:
       - name: "dump"
