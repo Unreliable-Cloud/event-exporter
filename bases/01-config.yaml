@@ -12,7 +12,7 @@ data:
     route:
       routes:
       - drop:
-        - namespace: "kyverno"
+        - reason: "DNSConfigForming"
         match:
         - receiver: "dump"
       - match:
