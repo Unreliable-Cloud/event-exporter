@@ -13,6 +13,7 @@ data:
       routes:
       - drop:
         - reason: "DNSConfigForming"
+        - reason: "PolicyApplied"
         match:
         - receiver: "dump"
     receivers:
