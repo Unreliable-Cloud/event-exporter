@@ -15,6 +15,9 @@ data:
         - namespace: "kyverno"
         match:
         - receiver: "dump"
+      - match:
+        - kind: "Pod|Deployment|DaemonSet|StatefulSet"
+          receiver: "dump"
     receivers:
       - name: "dump"
         stdout: {}
